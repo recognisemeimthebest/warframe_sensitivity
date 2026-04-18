@@ -1,0 +1,34 @@
+# WarSens — Runtime dependencies.
+# Grouped by module. Heavy deps (torch, ultralytics, PySide6) are declared
+# here but deferred — install lazily as each module is implemented to
+# avoid multi-GB downloads during early Phase 0.
+#
+# Install everything:
+#   pip install -r requirements.txt
+# Install per module (preferred during Phase 0):
+#   pip install -r requirements.txt --only-binary=:all: <package>
+
+# --- Core / shared ---
+numpy>=1.26,<3
+pandas>=2.1
+pyarrow>=15           # Parquet I/O
+
+# --- collector/ — mouse input + screen capture ---
+pynput>=1.7
+dxcam>=0.0.5          # DXGI screen capture (Windows)
+
+# --- cv/ — YOLO + template matching ---
+opencv-python>=4.9
+# Install torch BEFORE ultralytics if you need a specific CUDA build:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+# Otherwise the default CPU wheel is pulled in by the torch line below.
+torch>=2.2
+ultralytics>=8.2
+
+# --- recommender/ — ML ---
+scikit-learn>=1.4
+xgboost>=2.0
+
+# --- ui/ — desktop app ---
+PySide6>=6.6
+pyqtgraph>=0.13

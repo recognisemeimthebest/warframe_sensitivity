@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "warsens"
+version = "0.0.1"
+description = "Warframe mouse sensitivity advisor — data-driven per-user recommendation."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "recognisemeimthebest" }]
+license = { text = "MIT" }
+
+# Runtime deps stay declared in requirements.txt for easy per-module
+# install during Phase 0. When the project stabilizes, migrate these
+# into [project.dependencies] with proper lower bounds.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "pyinstaller>=6.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

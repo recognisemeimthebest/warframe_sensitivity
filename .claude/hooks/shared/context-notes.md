@@ -8,8 +8,8 @@
 
 ## 현재 작업
 - **Phase 0 진행 중.**
-- 프로젝트 디렉토리 구조 생성 완료 (orchestrator 루프 2회 PASS). `src/warsens/` 패키지 레이아웃 확정.
-- 다음: Python 가상환경 + `requirements.txt` 초기화, 그다음 마우스 로거 PoC.
+- 프로젝트 디렉토리 구조 + Python venv/requirements 초기화 완료 (각 orchestrator 루프 2회 PASS).
+- 다음: 마우스 입력 로거 PoC (pynput + Raw Input, 1000Hz).
 
 ## 워크플로우 규칙
 - 코드 생성/수정 또는 기획 변경 작업은 **기본적으로 orchestrator를 경유**한다.
@@ -44,11 +44,13 @@
 - 서버 코드는 Phase 2 도달 시 별도 레포/패키지 여부 재결정.
 
 ### 기술 선택
-- 언어: Python 3.11+
+- 언어: Python 3.11+ — **실사용 3.13.9 (Anaconda)**. 3.14는 torch/ultralytics 호환성 리스크, 3.10은 스펙 미달이라 3.13 채택.
+- 가상환경: `.venv/` (프로젝트 루트, gitignored)
 - UI: **PySide6** (LGPL). PyQt6는 배포 제약으로 제외.
 - 화면 캡처: `dxcam`. 마우스: Raw Input / `pynput`.
-- CV: YOLOv8/v11 (ultralytics). 크로스헤어는 템플릿 매칭.
+- CV: YOLOv8/v11 (ultralytics) + torch. 크로스헤어는 템플릿 매칭.
 - ML: Phase 1 휴리스틱 → Phase 2 XGBoost → Phase 3 (선택) DL.
+- 의존성 관리: `requirements.txt` (단일 진실원천) + `pyproject.toml` (src layout, setuptools).
 
 ### 안티치트
 - EAC에 대해 **읽기 전용 캡처만** 허용. 입력 주입/메모리 접근 절대 금지.
