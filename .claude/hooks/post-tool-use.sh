@@ -208,7 +208,7 @@ ERROR_ACTION=""
 if [ "$ISSUE_COUNT" -gt 0 ] && [ "$ISSUE_COUNT" -le 2 ]; then
     ERROR_ACTION="\n[자동 수정 권장] 발견된 이슈 ${ISSUE_COUNT}개 — 경미한 수준입니다. 위 항목을 지금 바로 수정하세요."
 elif [ "$ISSUE_COUNT" -ge 3 ]; then
-    ERROR_ACTION="\n[전문 에이전트 호출 권장] 발견된 이슈 ${ISSUE_COUNT}개 — 이슈가 많습니다.\n  → code-review-auditor 에이전트를 호출하여 전체 파일을 정밀 검토하세요.\n  → 파일: \`${FILE_PATH}\`"
+    ERROR_ACTION="\n[오케스트레이터 호출 권장] 발견된 이슈 ${ISSUE_COUNT}개 — 이슈가 많습니다.\n  → \`orchestrator\` 에이전트를 호출해 리뷰 루프(최대 5회)로 합의까지 진행하세요.\n  → 작성자: 해당 도메인 에이전트 / 감사관: code-auditor\n  → 파일: \`${FILE_PATH}\`\n  → 프로토콜: .claude/skills/ch03-review-loop.md"
 fi
 
 # =============================================================================

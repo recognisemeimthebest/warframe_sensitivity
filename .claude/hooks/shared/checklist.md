@@ -11,6 +11,7 @@
 - [x] 기획서 작성 (기획서.md)
 - [x] GitHub 저장소 연동 (recognisemeimthebest/warframe_sensitivity)
 - [x] HARNESS 오케스트레이션 적용 (.claude/)
+- [x] 리뷰 루프 오케스트레이션 추가 (orchestrator 에이전트 + ch03-review-loop, 최대 5회)
 
 ## Phase 0 — 프로토타입 (혼자 검증)
 

@@ -264,6 +264,13 @@ if echo "$MSG_LOWER" | grep -qiE '기획|계획|스펙|마일스톤|milestone|ph
     RECOMMENDED_AGENTS+=" plan-auditor"
 fi
 
+# 오케스트레이터 — 코드생성/수정/리팩토링/기획 변경 카테고리 시 자동 추천
+# (리뷰 루프로 돌려서 감사관 합의까지 받게 하는 것이 기본)
+if echo "$CATEGORIES" | grep -qE '코드생성|수정|문서화' \
+   || echo "$MSG_LOWER" | grep -qiE '기획|계획|스펙|마일스톤'; then
+    RECOMMENDED_AGENTS+=" orchestrator"
+fi
+
 AGENT_COUNT=$(echo "$RECOMMENDED_AGENTS" | tr ' ' '\n' | grep -v '^$' | sort -u | wc -l)
 
 # =============================================================================
