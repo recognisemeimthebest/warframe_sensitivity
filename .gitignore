@@ -22,8 +22,9 @@ env/
 Thumbs.db
 desktop.ini
 
-# Claude
-.claude/
+# Claude — commit orchestration harness, but keep local overrides & runtime artifacts out
+.claude/settings.local.json
+.claude/hooks/shared/change-log.md
 
 # Data / models (too large for git)
 data/
