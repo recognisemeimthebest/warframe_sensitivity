@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude
+.claude/
+
+# Data / models (too large for git)
+data/
+datasets/
+recordings/
+*.mp4
+*.avi
+*.mkv
+*.pt
+*.onnx
+*.weights
+runs/
+
+# Logs
+*.log
+logs/
