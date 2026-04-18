@@ -12,6 +12,8 @@
 - [x] GitHub 저장소 연동 (recognisemeimthebest/warframe_sensitivity)
 - [x] HARNESS 오케스트레이션 적용 (.claude/)
 - [x] 리뷰 루프 오케스트레이션 추가 (orchestrator 에이전트 + ch03-review-loop, 최대 5회)
+- [x] 밴 리스크 리서치 — EAC 경계 조사, `docs/SAFETY_POLICY.md` 작성, code-auditor에 금지 import 체크 반영
+- [x] 유사 선례 리서치 — Chimpshot/Mouselabs/Oblivity/aim_trainer_analysis/NVIDIA 논문 분석, 기획서 §2-1/§2-2에 차별점·함정 반영
 
 ## Phase 0 — 프로토타입 (혼자 검증)
 

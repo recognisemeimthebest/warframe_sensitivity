@@ -52,14 +52,25 @@
 - ML: Phase 1 휴리스틱 → Phase 2 XGBoost → Phase 3 (선택) DL.
 - 의존성 관리: `requirements.txt` (단일 진실원천) + `pyproject.toml` (src layout, setuptools).
 
-### 안티치트
-- EAC에 대해 **읽기 전용 캡처만** 허용. 입력 주입/메모리 접근 절대 금지.
+### 안티치트 (2026-04 리서치 결론)
+- EAC는 **게임 프로세스 메모리 접근 / DLL 인젝션 / 입력 주입**을 탐지. Raw Input 수신·DXGI 캡처는 OBS와 동급으로 미탐지.
+- **허용**: `pynput.mouse.Listener`, Windows Raw Input API, `dxcam`.
+- **금지**: `pynput.mouse.Controller`, `pyautogui`, `SendInput`, `OpenProcess`, `ReadProcessMemory`, DLL 인젝션, DirectX 훅, 실시간 aim assist 오버레이.
+- 정책 전문: `docs/SAFETY_POLICY.md`. 감사 체크리스트는 `code-auditor.md`에 반영 완료.
+
+### 유사 선례 및 학습된 함정 (2026-04 리서치)
+- **선례**: Chimpshot(상용, 마우스 로그만), Aimlabs Mouselabs(훈련 게임 성적), Oblivity(Steam), Ngambarde/aim_trainer_analysis(OSS, Kovaak's YOLOv8 분석까지만), NVIDIA 2022 논문(연구).
+- **WarSens 차별점**: ① 워프레임 전용 도메인 ② 영상+입력 결합 ③ 수집→분석→추천 end-to-end.
+- **함정 1**: 개인 분산 큼 → 출력은 **단일값 + 신뢰구간**.
+- **함정 2**: 추천만 주면 채택률 낮음 → UI에 **A/B 비교 루프**(현재값 vs 추천값 짧은 세션) 필수.
+- **함정 3**: YOLO 게임 간 일반화 어려움 → 워프레임 단일 타이틀 집중이 오히려 옳음.
 
 ## 자료 위치
 
 | 자료 | 경로 |
 |------|------|
 | 기획서 | `기획서.md` |
+| 안전 정책 | `docs/SAFETY_POLICY.md` |
 | 이 맥락노트 | `.claude/hooks/shared/context-notes.md` |
 | 체크리스트 | `.claude/hooks/shared/checklist.md` |
 | 수정 기록 | `.claude/hooks/shared/change-log.md` (자동 생성) |

@@ -33,9 +33,20 @@ model: sonnet
 - [ ] async 함수에서 블로킹 호출 없는가
 - [ ] UI 스레드에서 무거운 작업 하지 않는가 (QThread 사용)
 
-### 프로젝트 특화
-- [ ] 워프레임 안티치트 경계 준수 (읽기 전용 캡처만)
-- [ ] 원본 영상이 서버 업로드 경로에 포함되어 있지 않은가
+### 프로젝트 특화 (워프레임 EAC 경계)
+상세 기준: `docs/SAFETY_POLICY.md` §5.
+
+- [ ] **금지 import 정적 검사** — 아래 심볼이 코드·`requirements.txt` 어디에도 없어야 함:
+  - 입력 주입: `pynput.mouse.Controller`, `pynput.keyboard.Controller`, `pyautogui`, `SendInput`, `mouse_event`, `keybd_event`
+  - 프로세스 접근: `OpenProcess`, `ReadProcessMemory`, `WriteProcessMemory`, `pymem`, `frida`, `ReadWriteMemory`
+  - 훅/인젝션: `CreateRemoteThread`, `VirtualAllocEx`, `SetWindowsHookEx`(외부 DLL 인젝션 목적)
+- [ ] **읽기 전용 캡처만** 사용 (Raw Input Listener, `dxcam` 등)
+- [ ] **실시간 피드백 루프 부재** — CV 출력이 입력 모듈 또는 세션 중 오버레이에 흐르지 않는가
+- [ ] 캡처 대상이 **Warframe 창**에 한정되어 있는가 (전체 화면 아님)
+- [ ] 원본 영상이 서버 업로드 경로에 포함되지 않는가
+- [ ] 사용자 동의 화면이 수집 항목·저장 위치·업로드 여부를 명시하는가
+
+금지 심볼이 하나라도 발견되면 **심각도: 높음**, 판정은 CONDITIONAL PASS 이하.
 
 ## 보고서 형식
 ```
