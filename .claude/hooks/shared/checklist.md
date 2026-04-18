@@ -15,7 +15,7 @@
 
 ## Phase 0 — 프로토타입 (혼자 검증)
 
-- [ ] 프로젝트 디렉토리 구조 생성 (`src/`, `tests/`, `data/` 등)
+- [x] 프로젝트 디렉토리 구조 생성 (`src/`, `tests/`, `data/` 등) — orchestrator 루프 2회에 PASS
 - [ ] Python 가상환경 + `requirements.txt` 초기화
 - [ ] 마우스 입력 로거 PoC (Raw Input 또는 pynput, 1000Hz)
 - [ ] 화면 캡처 PoC (dxcam, 60 FPS, 워프레임 창 크롭)

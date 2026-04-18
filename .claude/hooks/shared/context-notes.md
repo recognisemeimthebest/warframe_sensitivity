@@ -7,9 +7,9 @@
 ---
 
 ## 현재 작업
-- **Phase 0 착수 직전.** 오케스트레이션 하네스 세팅은 완료.
-- **리뷰 루프 오케스트레이션 추가** — orchestrator 에이전트가 작성자 ↔ 감사관을 최대 5회 왕복시켜 합의 도출. 5회 초과 시 사용자 에스컬레이션.
-- 다음: 마우스 로거 + 화면 캡처 동기화 PoC 작성.
+- **Phase 0 진행 중.**
+- 프로젝트 디렉토리 구조 생성 완료 (orchestrator 루프 2회 PASS). `src/warsens/` 패키지 레이아웃 확정.
+- 다음: Python 가상환경 + `requirements.txt` 초기화, 그다음 마우스 로거 PoC.
 
 ## 워크플로우 규칙
 - 코드 생성/수정 또는 기획 변경 작업은 **기본적으로 orchestrator를 경유**한다.
@@ -34,6 +34,14 @@
 ### 참여자 모집 / 보상
 - 본인 + 오픈채팅방. 플래티넘 직접 지급 + 비금전적 보상 병행.
 - 플래티넘 거래 규칙(세금, 쿨다운) 고려해 보상 한도 설정 필요.
+
+### 패키지 레이아웃 (확정)
+- 루트 패키지: `src/warsens/`
+- 서브모듈: `collector`, `cv`, `analysis`, `recommender`, `ui`, `storage`, `uploader`, `common`
+- 테스트: `tests/test_<module>/`
+- 런타임 산출물: `data/sessions/`, `data/models/` (gitignored)
+- 추적 자원: `data/templates/` (크로스헤어 템플릿 이미지)
+- 서버 코드는 Phase 2 도달 시 별도 레포/패키지 여부 재결정.
 
 ### 기술 선택
 - 언어: Python 3.11+

@@ -26,8 +26,10 @@ desktop.ini
 .claude/settings.local.json
 .claude/hooks/shared/change-log.md
 
-# Data / models (too large for git)
-data/
+# Data / models (too large for git) — exclude runtime artifacts,
+# but keep templates/ tracked (crosshair references used by the CV module).
+data/sessions/
+data/models/
 datasets/
 recordings/
 *.mp4
