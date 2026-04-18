@@ -9,7 +9,8 @@
 ## 현재 작업
 - **Phase 0 진행 중.**
 - 프로젝트 디렉토리 구조 + Python venv/requirements 초기화 완료 (각 orchestrator 루프 2회 PASS).
-- 다음: 마우스 입력 로거 PoC (pynput + Raw Input, 1000Hz).
+- 2026-04-18 결정: **경로 X 확정** (실제 워프레임 + Bisection + 통계), **딥러닝 포기**, **모드별 분리 최적화**.
+- 다음: 마우스 입력 로거 PoC (pynput + Raw Input, 1000Hz) → **슬라이더 캘리브레이션 실측** → **지상전 unimodal grid scan** 순.
 
 ## 워크플로우 규칙
 - 코드 생성/수정 또는 기획 변경 작업은 **기본적으로 orchestrator를 경유**한다.
@@ -29,7 +30,24 @@
 
 ### 추천 출력
 - **절대값 민감도** 추천 (예: 0.42). 델타/퍼센트 아님.
-- **종합 최적값 1개** — 지상/파쿠르/에임글라이드 별로 나누지 않음.
+- **모드별 분리 최적화** — 지상전 / 파쿠르 / 에임글라이드 각각 별도 값 제시.
+  - (이전 결정: "종합 최적값 1개" — 2026-04-18 plan-auditor 2차 감사 결과 폐기. 단일 unimodal 합성 가정이 미검증이었음.)
+  - Phase 0 지상전 grid scan 결과에 따라 모드 개수/정의 재조정 가능성 열어둠.
+- **출력 형식:** 단일값 + 95% CI + 탐색 경로 시각화.
+
+### 추천 알고리즘 (Phase 1 확정, 2026-04-18)
+- **Bisection + A/B/A + SPRT** (golden-section search 계열, 1D unimodal 최적화).
+- 조작 모드별로 독립 실행. 초기 구간은 §5-3 cm/360 매핑으로 설정.
+- 세션 길이 2~3분, 최대 7스텝, SPRT 조기 종료.
+- **딥러닝 사용하지 않음** (Phase 3 DL 경로 제거).
+- Phase 2 XGBoost는 **초기 구간 제안** 용도로만 사용 (개인 최적화는 Bisection 담당).
+- 탐색 경로 전체(패배 구간 포함)를 스토리지에 보존 → Phase 2 학습 데이터로 승계.
+- MAB(Thompson Sampling) 금지 — 연속 1D unimodal 구조 낭비. golden-section이 $O(\log n)$ 이론적 최적.
+
+### Phase 0 필수 실측 (Bisection 알고리즘 전제, 감사관 조건부 PASS)
+- **슬라이더 ↔ cm/360 매핑 실측** — 비선형/비단조 확인 시 알고리즘 재설계.
+- **지상전 unimodal pre-check** — grid scan(20/40/60/80)으로 단봉형 확인. 다봉형이면 Bisection 포기하고 grid+local 최적화로 전환.
+- **DPI 보정** — §5-3 방식 (a) 사용자 자가 입력 또는 (b) 앱 내 두 점 이동 캘리브레이션.
 
 ### 참여자 모집 / 보상
 - 본인 + 오픈채팅방. 플래티넘 직접 지급 + 비금전적 보상 병행.
@@ -49,7 +67,7 @@
 - UI: **PySide6** (LGPL). PyQt6는 배포 제약으로 제외.
 - 화면 캡처: `dxcam`. 마우스: Raw Input / `pynput`.
 - CV: YOLOv8/v11 (ultralytics) + torch. 크로스헤어는 템플릿 매칭.
-- ML: Phase 1 휴리스틱 → Phase 2 XGBoost → Phase 3 (선택) DL.
+- ML: **Phase 1 Bisection+SPRT → Phase 2 XGBoost(초기 구간 제안용) → Phase 3 DL 미사용**.
 - 의존성 관리: `requirements.txt` (단일 진실원천) + `pyproject.toml` (src layout, setuptools).
 
 ### 안티치트 (2026-04 리서치 결론)
